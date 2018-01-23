@@ -7,7 +7,7 @@ const App = () => {
     <div>
       <ul>
         <li><Link to="/">/</Link></li>
-        <li><Link to="/polling">polling</Link></li>
+        <li><Link to="/list">list</Link></li>
       </ul>
       <Routes />
     </div>

@@ -1,13 +1,25 @@
 import { takeEvery, takeLatest } from 'redux-saga';
+import axios from 'axios';
 import { call, put } from 'redux-saga/effects';
 
-export default function* countSaga(action) {
+
+export function* fetchSaga(action) {
   try {
-    console.log(action, 'action');
-    yield put({ type: 'INCREASE', action });
+    yield put({ type: 'GET_LOADING' });
+    const info = yield call(axios.get, action.params.url);
+    yield put({ type: 'GET_INFO', list: info.data.list });
   } catch (e) {
     // yield put({ type: "USER_FETCH_FAILED", message: e.message });
   }
+}
+
+// wacther saga
+function* watchSagas() {
+  yield takeLatest('FETCH_SAGA', fetchSaga);
+}
+
+export default function* rootSaga() {
+  yield watchSagas();
 }
 
 /*
